@@ -12,39 +12,80 @@ package com.fespinoza;
 import com.fespinoza.implementaciones.*;
 import com.fespinoza.interfaces.IVehiculo;
 
+import java.util.Scanner;
+
 public class Main {
 
     public static void main (String[] args) {
 
-        IVehiculo carro = new Carro();
-        IVehiculo moto = new Moto();
-        IVehiculo bicicleta = new Bicicleta();
-        IVehiculo camion = new Camion();
-        IVehiculo patineta = new Patineta();
+        Scanner scanner = new Scanner(System.in);
 
-        System.out.println("---- Carro ----");
-        System.out.println("El vehículo es de la marca " + carro.getMarca() + " y el color es " + carro.getColor());
-        carro.mover();
-        System.out.println("El vehículo se mueve a la velocidade de " + carro.velocidad() + "Km/h \n");
+        System.out.println("Bienvenido al sistema de gestión de vehículos!");
 
-        System.out.println("---- Moto ----");
-        System.out.println("El vehículo es de la marca " + moto.getMarca() + " y el color es " + moto.getColor());
-        moto.mover();
-        System.out.println("El vehículo se mueve a la velocidade de " + moto.velocidad() + "Km/h \n");
+        while (true) {
+            System.out.println("Por favor, selecciona una de las opciones para ver sus informaciones:");
+            System.out.println("1. Carro");
+            System.out.println("2. Moto");
+            System.out.println("3. Camion");
+            System.out.println("4. Bicicleta");
+            System.out.println("5. Patineta");
+            System.out.println("6. Salir");
 
-        System.out.println("---- Bicicleta ----");
-        System.out.println("El vehículo es de la marca " + bicicleta.getMarca() + " y el color es " + bicicleta.getColor());
-        bicicleta.mover();
-        System.out.println("El vehículo se mueve a la velocidade de " + bicicleta.velocidad() + "Km/h \n");
+            int opcion;
+            try {
+                System.out.print("Introduce el número de tu elección: ");
+                opcion = scanner.nextInt();
+            } catch (Exception e) {
+                System.out.println("Entrada inválida. Por favor, introduce un número entre 1 y 6.");
+                scanner.nextLine();
+                continue;
+            }
 
-        System.out.println("---- Camion ----");
-        System.out.println("El vehículo es de la marca " + camion.getMarca() + " y el color es " + camion.getColor());
-        camion.mover();
-        System.out.println("El vehículo se mueve a la velocidade de " + camion.velocidad() + "Km/h \n");
+            if (opcion == 6) {
+                System.out.println("Gracias por usar el sistema! Hasta luego.");
+                break;
+            }
 
-        System.out.println("---- Patineta ----");
-        System.out.println("El vehículo es de la marca " + patineta.getMarca() + " y el color es " + patineta.getColor());
-        patineta.mover();
-        System.out.println("El vehículo se mueve a la velocidade de " + patineta.velocidad() + "Km/h \n");
+            IVehiculo vehiculo;
+            switch (opcion) {
+                case 1 -> {
+                    vehiculo = new Carro();
+                    opcionSeleccionada("Carro");
+                }
+                case 2 -> {
+                    vehiculo = new Moto();
+                    opcionSeleccionada("Moto");
+                }
+                case 3 -> {
+                    vehiculo = new Camion();
+                    opcionSeleccionada("Camion");
+                }
+                case 4 -> {
+                    vehiculo = new Bicicleta();
+                    opcionSeleccionada("Bicicleta");
+                }
+                case 5 -> {
+                    vehiculo = new Patineta();
+                    opcionSeleccionada("Patineta");
+                }
+                default -> {
+                    System.out.println("Opción inválida. Por favor, selecciona un número entre 1 y 5.");
+                    continue;
+                }
+            }
+            masInformacionesVehiculo(vehiculo);
+        }
+        scanner.close();
+    }
+
+    private static void opcionSeleccionada(String tipoVehiculo) {
+        System.out.println("\n ---- Has selecionado la opción: " + tipoVehiculo + " ----");
+    }
+
+    private static void masInformacionesVehiculo (IVehiculo vehiculo) {
+        System.out.println("La marca es: " + vehiculo.getMarca());
+        System.out.println("El color es: " + vehiculo.getColor());
+        System.out.println("La velocidad máxima es de: " + vehiculo.velocidad() + "Km/h");
+        System.out.println("-------------------------------------------------");
     }
 }
